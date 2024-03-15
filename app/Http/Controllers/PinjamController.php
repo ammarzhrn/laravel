@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pinjam;
+use App\Models\Buku;
 use Illuminate\Http\Request;
 
 class PinjamController extends Controller
@@ -13,7 +14,8 @@ class PinjamController extends Controller
     public function index()
     {
         $pinjam = Pinjam::all();
-        return view('pinjam.index', compact('pinjam'));
+        $buku = Buku::all();
+        return view('pinjam.index', compact('pinjam', 'buku'));
     }
 
     /**
@@ -29,7 +31,9 @@ class PinjamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        Pinjam::create($input);
+        return back();
     }
 
     /**

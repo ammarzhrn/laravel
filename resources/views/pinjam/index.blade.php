@@ -14,15 +14,18 @@
                     <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                                Judul
+                                ID Buku
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Pengarang
+                                Peminjam
                             </th>
                             <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                                Penerbit
+                                Tanggal Peminjaman
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Tanggal Pengembalian
+                            </th>
+                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
                                 Action
                             </th>
                         </tr>
@@ -33,19 +36,22 @@
                         <tr class="border-b border-gray-200 dark:border-gray-700">
                             <th scope="row"
                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                {{$data->judul}}
+                                {{$data->id_buku}}
                             </th>
                             <td class="px-6 py-4">
-                                {{$data->pengarang}}
+                                {{$data->nama_peminjam}}
                             </td>
                             <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                                {{$data->penerbit}}
+                                {{$data->pinjam}}
                             </td>
                             <td class="px-6 py-4">
+                                {{$data->kembali}}
+                            </td>
+                            <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
                                 <a href="{{route('buku.show', $data->id)}}" 
                                     class="hover:text-gray-700 hover:font-semibold duration-100">Detail
                                 </a>
-                                <form action="{{route('buku.destroy', $data->id)}}" method="post">
+                                <form action="{{route('pinjam.destroy', $data->id)}}" method="post">
                                     @csrf
                                     {{method_field('DELETE')}}
                                     <button type="submit" class="text-red-500 hover:text-red-700 hover:font-semibold duration-100" >Delete</button>
@@ -90,7 +96,7 @@
                                 </button>
                             </div>
                             <!-- Modal body -->
-                            <form class="p-4 md:p-5" method="POST" action="{{route('buku.store')}}">
+                            <form class="p-4 md:p-5" method="POST" action="{{route('pinjam.store')}}">
                                 @csrf
                                 <div class="grid gap-4 mb-4 grid-cols-2">
                                     <div class="col-span-2">
@@ -102,19 +108,24 @@
                                     </div>
                                     <div class="col-span-2">
                                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Buku</label>
-                                        <select name="id_buku" class="block mb-2 text-sm font-medium text-gray-900" id="">
+                                        <select name="id_buku" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" id="">
                                             @foreach($buku as $item)
-                                            <option value="{{$item->judul}}"></option>
+                                            <option value="{{$item->id}}">{{$item->judul}}</option>
                                             @endforeach
                                         </select>
                                         
                                     </div>
                                     <div class="col-span-2">
                                         <label for="name"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Penerbit</label>
-                                        <input type="text" name="penerbit" id="name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Type publisher name" required="">
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Pinjam</label>
+                                        <input type="date" name="pinjam" id="name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                                    </div>
+                                    <div class="col-span-2">
+                                        <label for="name"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Kembali</label>
+                                        <input type="date" name="kembali" id="name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
                                     </div>
                                 </div>
                                 <button type="submit"

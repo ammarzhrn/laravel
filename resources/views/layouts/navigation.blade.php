@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        <img class="block h-16 w-auto fill-current text-gray-800 dark:text-gray-200 hover:opacity-80 duration-200" src="{{ asset('images/logo.png') }}" alt="">
                     </a>
                 </div>
 
@@ -14,6 +14,12 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('buku.index')" :active="request()->routeIs('buku')">
+                        {{ __('Buku') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('pinjam.index')" :active="request()->routeIs('pinjam')">
+                        {{ __('Peminjaman') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -36,6 +42,14 @@
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('buku.index')">
+                            {{ __('Buku') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('pinjam.index')">
+                            {{ __('Pinjam') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
