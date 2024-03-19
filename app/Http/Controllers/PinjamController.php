@@ -39,9 +39,11 @@ class PinjamController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pinjam $pinjam)
+    public function show($id)
     {
-        //
+        $data = Pinjam::find($id);
+        $buku = Buku::all();
+        return view('pinjam.detail', compact('data', 'buku'));
     }
 
     /**
@@ -55,16 +57,21 @@ class PinjamController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pinjam $pinjam)
+    public function update(Request $request, $id)
     {
-        //
+        $data = $request->all(); // Mengambil seluruh request dari form
+        $pinjam = pinjam::find($id); // Mengambil data dari ID yang akan diubah
+        $pinjam->update($data); // Perintah untuk mengupdate data
+        return redirect('/pinjam');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pinjam $pinjam)
+    public function destroy($id)
     {
-        //
+        $data = pinjam::find($id);
+        $data->delete();
+        return back();
     }
 }

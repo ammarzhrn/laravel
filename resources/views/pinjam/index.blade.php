@@ -48,7 +48,7 @@
                                 {{$data->kembali}}
                             </td>
                             <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                                <a href="{{route('buku.show', $data->id)}}" 
+                                <a href="{{route('pinjam.show', $data->id)}}" 
                                     class="hover:text-gray-700 hover:font-semibold duration-100">Detail
                                 </a>
                                 <form action="{{route('pinjam.destroy', $data->id)}}" method="post">

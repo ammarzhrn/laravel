@@ -11,4 +11,9 @@ class Pinjam extends Model
 
     protected $table = 'pinjam';
     protected $guarded = [];
+
+    public function buku()
+    {
+        return $this->belongsTo('App\Models\Buku', 'id_buku');
+    }
 }

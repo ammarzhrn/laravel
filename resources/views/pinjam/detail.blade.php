@@ -3,7 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Detail Buku
         </h2>
-        <a href="{{route('buku.index')}}" class="hover:text-gray-500">Back</a>
+        <a href="{{route('pinjam.index')}}" class="hover:text-gray-500">Back</a>
     </x-slot>
 
     <div class="py-12">
@@ -17,7 +17,7 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Detail Buku "{{$data->judul}}"
+                                    Detail Peminjam "{{$data->nama_peminjam}}"
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                 </th>
@@ -26,29 +26,38 @@
                         <tbody>
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Judul
+                                    Nama Peminjam
                                 </th>
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{$data->judul}}
+                                    {{$data->nama_peminjam}}
                                 </th>
                             </tr>
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Pengarang
+                                    Judul Buku
                                 </th>
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{$data->pengarang}}
+                                    {{$data->buku->judul}}
                                 </th>
                             </tr>
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Penerbit
+                                    Tanggal Pinjam
                                 </th>
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{$data->penerbit}}
+                                    {{$data->pinjam}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Tanggal Kembali
+                                </th>
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{$data->kembali}}
                                 </th>
                             </tr>
                         </tbody>
@@ -66,7 +75,7 @@
                                         <path fill-rule="evenodd"
                                             d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
                                             clip-rule="evenodd"></path>
-                                    </svg>Edit Buku "{{$data->judul}}"</span>
+                                    </svg>Edit Data Peminjaman "{{$data->nama_peminjam}}"</span>
                                 <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -77,30 +86,40 @@
                         <div id="accordion-open-body-1" class="hidden" aria-labelledby="accordion-open-heading-1">
                             <div class="border border-gray-200 dark:border-gray-700 dark:bg-gray-900 px-3 py-4">
                                 <!--Form Edit-->
-                                <form class="p-2 md:p-5" method="POST" action="{{route('buku.update', $data->id)}}">
+                                <form class="p-2 md:p-5" method="POST" action="{{route('pinjam.update', $data->id)}}">
                                     @csrf
                                     {{method_field('PUT')}}
                                     <div class="grid gap-4 mb-4 grid-cols-2">
                                         <div class="col-span-2">
-                                            <label for="name"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Judul</label>
-                                            <input type="text" name="judul" id="name"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                value="{{$data->judul}}" required="">
+                                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Buku</label>
+                                            <select name="id_buku" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" id="">
+                                                <option value="{{$data->id_buku}}">{{$data->buku->judul}}</option>
+                                                @foreach($buku as $item)
+                                                <option value="{{$item->id}}">{{$item->judul}}</option>
+                                                @endforeach
+                                            </select>
+                                            
                                         </div>
                                         <div class="col-span-2">
                                             <label for="name"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pengarang</label>
-                                            <input type="text" name="pengarang" id="name"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Peminjam</label>
+                                            <input type="text" name="nama_peminjam" id="name"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                value="{{$data->pengarang}}" required="">
+                                                value="{{$data->nama_peminjam}}" required="">
                                         </div>
                                         <div class="col-span-2">
                                             <label for="name"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Penerbit</label>
-                                            <input type="text" name="penerbit" id="name"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Peminjaman</label>
+                                            <input type="date" name="pinjam" id="name"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                value="{{$data->penerbit}}" required="">
+                                                value="{{$data->pinjam}}" required="">
+                                        </div>
+                                        <div class="col-span-2">
+                                            <label for="name"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Pengembalian</label>
+                                            <input type="date" name="kembali" id="name"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                value="{{$data->kembali}}" required="">
                                         </div>
                                     </div>
                                     <button type="submit"
